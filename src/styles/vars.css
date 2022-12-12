@@ -1,4 +1,7 @@
 :root {
   --main-text: #333;
-  --main-background: lightblue;
+  --main-background: #f9f9f9;
+  --color-button: #1976d2;
+  --color-button-hover: #1565c0;
+  --color-border: rgb(218, 218, 218);
 }

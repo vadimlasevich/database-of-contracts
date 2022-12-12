@@ -1,0 +1,17 @@
+form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 2.5rem;
+}
+
+.form-btn {
+  display: block;
+  margin: 10rem 0 0 auto;
+}
+.w-33 {
+  width: calc(33.333% - (30px / 3));
+}
+.w-50 {
+  width: calc(50% - (30px / 2));
+}

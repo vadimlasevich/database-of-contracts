@@ -1,0 +1,11 @@
+.nav {
+  width: 15%;
+  padding: 2rem;
+  text-align: center;
+}
+.nav a {
+  display: block;
+}
+.nav a:not(:last-child) {
+  margin-bottom: 2.5rem;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import './Filter.css';
 
 const Filter = () => {
-  return <div>Filter</div>;
+  return <div className="filter">Filter</div>;
 };
 
 export default Filter;
