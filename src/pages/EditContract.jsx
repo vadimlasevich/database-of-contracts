@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Editcontract = () => {
+const EditContract = () => {
   return <div>Editcontract</div>;
 };
 
-export default Editcontract;
+export default EditContract;

@@ -6,7 +6,7 @@
 }
 main {
   width: 60%;
-  padding: 3rem;
+  padding: 2rem;
   border-left: 2px solid var(--color-border);
   border-right: 2px solid var(--color-border);
 }

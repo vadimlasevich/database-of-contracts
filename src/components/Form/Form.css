@@ -7,7 +7,10 @@ form {
 
 .form-btn {
   display: block;
-  margin: 10rem 0 0 auto;
+  margin: 2rem 0 0 auto;
+}
+.w-25 {
+  width: calc(25% - (40px / 4));
 }
 .w-33 {
   width: calc(33.333% - (30px / 3));
