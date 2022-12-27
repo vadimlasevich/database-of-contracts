@@ -19,14 +19,19 @@ const App = () => {
     }
   };
 
+  const dataContractEdit = (data) => console.log(data);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="budget-contracts" element={<BudgetContracts contracts={contractsBudget} />} />
-        <Route path="own-contracts" element={<OwnContracts contracts={contractsOwn} />} />
+        <Route
+          path="budget-contracts"
+          element={<BudgetContracts contracts={contractsBudget} dataContractEdit={dataContractEdit} />}
+        />
+        <Route path="own-contracts" element={<OwnContracts contracts={contractsOwn} dataContractEdit={dataContractEdit} />} />
         <Route path="add-budget-contract" element={<AddContractBudget getDataContract={getDataContract} />} />
         <Route path="add-own-contract" element={<AddContractOwn getDataContract={getDataContract} />} />
-        <Route path=":typeContract/:id/edit" element={<EditContract />} />
+        <Route path="edit-contract" element={<EditContract />} />
       </Route>
     </Routes>
   );

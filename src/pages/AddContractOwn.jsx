@@ -6,7 +6,7 @@ const AddContractOwn = ({ getDataContract }) => {
   return (
     <>
       <Titlepage>Добавление договора за счет собственных средств</Titlepage>
-      <Form getDataContract={getDataContract} typeContract={'own'} />
+      <Form getDataContract={getDataContract} type={'own'} />
     </>
   );
 };

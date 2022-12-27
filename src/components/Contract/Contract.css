@@ -3,30 +3,75 @@
   padding: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
+  width: 100%;
 }
 .contract-item:not(:last-child) {
   margin-bottom: 2rem;
 }
-.contract-col {
+.contract-item__col {
   display: flex;
   flex-direction: column;
 }
-.contract-col:not(:last-child) {
+.contract-item__col:not(:last-child) {
   margin-right: 1rem;
   padding-right: 1rem;
   border-right: 1px solid #333;
 }
-.contract-col-title {
+.contract-item__title {
   font-size: 1.4rem;
   line-height: 130%;
   font-weight: 600;
   text-align: center;
   margin-bottom: 1.5rem;
 }
-.contract-col span {
+.contract-item__col span {
   text-align: center;
   font-size: 1.3rem;
   margin-top: auto;
   margin-bottom: 0.5rem;
+}
+.contract-block {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.contract-item__count {
+  margin-right: 2rem;
+  font-size: 2rem;
+}
+.all-price {
+  font-size: 1.8rem;
+  text-align: right;
+}
+.all-price span {
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
+.contract-item__row {
+  display: flex;
+  align-items: center;
+}
+.contract-item__row span {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+.contract-item__content-min.show {
+  display: flex;
+  transition: all 0.5s ease;
+}
+.contract-item__content-min {
+  display: none;
+}
+.contract-item__content-max {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+.contract-item__content-max.show {
+  max-height: 999px;
+}
+.contract-item__btn-edit {
+  text-align: end;
 }
