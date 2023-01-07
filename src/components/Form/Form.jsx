@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '../UI/Button';
 import Input from '../UI/Input';
-import { v4 as uuidv4 } from 'uuid';
-import './Form.css';
 import Modal from '../UI/Modal';
+import { typeContractModal } from '../../vars/Titles';
 
-const Form = ({ getDataContract, type }) => {
+import './Form.css';
+
+const Form = ({ getDataContract, typeContract }) => {
   const [dateConclusion, setDateConclusion] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -19,7 +21,7 @@ const Form = ({ getDataContract, type }) => {
   } = useForm();
 
   const handleAddNewContract = (data) => {
-    data.typeContract = type;
+    data.typeContract = typeContract;
     data.id = uuidv4();
     getDataContract(data);
     setModalOpen(true);
@@ -32,7 +34,7 @@ const Form = ({ getDataContract, type }) => {
   }, [watch('DateConclusion')]);
 
   useEffect(() => {
-    if (type === 'budget') {
+    if (typeContract === 'budget') {
       const referenceZoi = document.querySelector('#reference-zoi');
       if (watch('typeProcedure') === 'ЗОИ') {
         referenceZoi.classList.remove('reference-zoi');
@@ -43,17 +45,6 @@ const Form = ({ getDataContract, type }) => {
       return;
     }
   }, [watch('typeProcedure')]);
-
-  const getTextModal = () => {
-    let text;
-    if (type === 'budget') {
-      text = 'Договор в категорию "Бюджетные" успешно добавлен';
-    } else if (type === 'own') {
-      text = 'Договор в категорию "За счет собственных средств" успешно добавлен';
-    }
-
-    return text;
-  };
 
   const closeModal = () => setModalOpen(false);
 
@@ -119,7 +110,7 @@ const Form = ({ getDataContract, type }) => {
           errors={errors.manufacturingFirm}
           required
         />
-        {type === 'budget' && (
+        {typeContract === 'budget' && (
           <>
             <label className="w-33">
               Форма договора
@@ -222,7 +213,7 @@ const Form = ({ getDataContract, type }) => {
           Добавить договор
         </Button>
       </form>
-      <Modal className={modalOpen ? 'show' : ''} children={getTextModal()} closeModal={closeModal} />
+      <Modal className={modalOpen ? 'show' : ''} typeContract={typeContractModal[typeContract]} closeModal={closeModal} />
     </>
   );
 };

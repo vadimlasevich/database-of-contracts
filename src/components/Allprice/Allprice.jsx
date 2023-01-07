@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Allprice = ({ contracts }) => {
+const Allprice = ({ contracts, typeContract }) => {
   let price = 0;
-  contracts.forEach((item) => (price += +item.Price));
+  contracts.filter((contract) => contract.typeContract === typeContract).forEach((item) => (price += +item.Price));
 
   return (
     <div className="all-price">

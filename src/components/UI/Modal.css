@@ -26,7 +26,8 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 10px;
-  max-width: 30rem;
+  width: 100%;
+  max-width: 35rem;
   padding: 2rem;
 }
 .modal__btn-close {
@@ -36,5 +37,8 @@
 .modal__text {
   text-align: center;
   font-size: 2rem;
-  line-height: 120%;
+  line-height: 130%;
+}
+.modal__text span {
+  font-weight: 600;
 }

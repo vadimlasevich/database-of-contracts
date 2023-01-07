@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import AddContractBudget from './pages/AddContractBudget';
-import AddContractOwn from './pages/AddContractOwn';
-import BudgetContracts from './pages/BudgetContracts';
+import AddContract from './pages/AddContract';
+import Contracts from './pages/Contracts';
 import EditContract from './pages/EditContract';
-import OwnContracts from './pages/OwnContracts';
 
 const App = () => {
-  const [contractsBudget, setContractsBudget] = useState([]);
-  const [contractsOwn, setContractsOwn] = useState([]);
+  // const [contractsBudget, setContractsBudget] = useState([]);
+  // const [contractsOwn, setContractsOwn] = useState([]);
+  const [contracts, setContracts] = useState([]);
+  const [typeContract, setTypeContract] = useState('');
 
-  const getDataContract = (data) => {
-    if (data.typeContract === 'budget') {
-      setContractsBudget((prevDataContract) => [...prevDataContract, data]);
-    } else if (data.typeContract === 'own') {
-      setContractsOwn((prevDataContract) => [...prevDataContract, data]);
-    }
-  };
+  const getDataContract = (data) => setContracts((prevContracts) => [...prevContracts, data]);
 
-  const dataContractEdit = (data) => console.log(data);
+  console.log(contracts);
+  // if (data.typeContract === 'budget') {
+  //   setContractsBudget((prevDataContract) => [...prevDataContract, data]);
+  // } else if (data.typeContract === 'own') {
+  //   setContractsOwn((prevDataContract) => [...prevDataContract, data]);
+  // }
+
+  // const dataContractEdit = (data) => console.log(data);
+  const getTypeContract = (type) => setTypeContract(type);
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout getTypeContract={getTypeContract} />}>
+        <Route path="contracts/:type" element={<Contracts contracts={contracts} typeContract={typeContract} />} />
         <Route
-          path="budget-contracts"
-          element={<BudgetContracts contracts={contractsBudget} dataContractEdit={dataContractEdit} />}
+          path="add-contract/:type"
+          element={<AddContract getDataContract={getDataContract} typeContract={typeContract} />}
         />
-        <Route path="own-contracts" element={<OwnContracts contracts={contractsOwn} dataContractEdit={dataContractEdit} />} />
-        <Route path="add-budget-contract" element={<AddContractBudget getDataContract={getDataContract} />} />
-        <Route path="add-own-contract" element={<AddContractOwn getDataContract={getDataContract} />} />
         <Route path="edit-contract" element={<EditContract />} />
       </Route>
     </Routes>

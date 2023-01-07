@@ -4,10 +4,10 @@ import Navbar from '../Navbar/Navbar';
 
 import './Layout.css';
 
-const Layout = () => {
+const Layout = ({ getTypeContract }) => {
   return (
     <div className="app">
-      <Navbar />
+      <Navbar getTypeContract={getTypeContract} />
       <main>
         <Outlet />
       </main>
