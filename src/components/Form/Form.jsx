@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../UI/Button';
@@ -7,9 +7,12 @@ import Modal from '../UI/Modal';
 import { typeContractModal } from '../../vars/Titles';
 
 import './Form.css';
+import ElemForm from './ElemForm';
+import InputRadio from '../UI/InputRadio';
 
 const Form = ({ getDataContract, typeContract }) => {
   const [dateConclusion, setDateConclusion] = useState('');
+  const [isReferenceZOI, setIsReferenceZOI] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const {
@@ -35,15 +38,8 @@ const Form = ({ getDataContract, typeContract }) => {
 
   useEffect(() => {
     if (typeContract === 'budget') {
-      const referenceZoi = document.querySelector('#reference-zoi');
-      if (watch('typeProcedure') === 'ЗОИ') {
-        referenceZoi.classList.remove('reference-zoi');
-      } else {
-        referenceZoi.classList.add('reference-zoi');
-      }
-    } else {
-      return;
-    }
+      watch('typeProcedure') === 'ЗОИ' ? setIsReferenceZOI(true) : setIsReferenceZOI(false);
+    } else return;
   }, [watch('typeProcedure')]);
 
   const closeModal = () => setModalOpen(false);
@@ -51,164 +47,76 @@ const Form = ({ getDataContract, typeContract }) => {
   return (
     <>
       <form onSubmit={handleSubmit(handleAddNewContract)}>
-        <Input
-          register={register}
-          label={'Number'}
-          className="w-25"
-          titleInput={'Номер'}
-          type={'number'}
-          errors={errors.Number}
-          required
-        />
-        <Input
-          register={register}
-          label={'DatePreparation'}
-          className="w-25"
-          titleInput={'Дата составления'}
-          type={'date'}
-          errors={errors.DatePreparation}
-          required
-        />
-        <Input
-          register={register}
-          label={'DateConclusion'}
-          className="w-25"
-          titleInput={'Дата подписания'}
-          type={'date'}
-          errors={errors.DateConclusion}
-          required
-        />
-        <label className="w-25">
-          Предмет договора
-          <div className="label-radio-buttons">
-            <label>
-              Услуга
-              <input {...register('subjectContract', { required: 'Выберите один из пунктов' })} type="radio" value="Услуга" />
-            </label>
-            <label>
-              Товар
-              <input {...register('subjectContract', { required: 'Выберите один из пунктов' })} type="radio" value="Товар" />
-            </label>
+        <ElemForm className="w-25" titleElement={'Номер'} errors={errors.Number}>
+          <Input register={register} label={'Number'} type={'number'} required />
+        </ElemForm>
+        <ElemForm className="w-25" titleElement={'Дата составления'} errors={errors.DatePreparation}>
+          <Input register={register} label={'DatePreparation'} type={'date'} required />
+        </ElemForm>
+        <ElemForm className="w-25" titleElement={'Дата подписания'} errors={errors.DateConclusion}>
+          <Input register={register} label={'DateConclusion'} type={'date'} required />
+        </ElemForm>
+        <ElemForm className="w-25" titleElement={'Предмет договора'} errors={errors.subjectContract}>
+          <div className="radio-buttons">
+            <InputRadio register={register} label={'subjectContract'} type={'radio'} value="Услуга" />
+            <InputRadio register={register} label={'subjectContract'} type={'radio'} value="Товар" />
           </div>
-          {errors?.subjectContract && <span className="error-message">{errors?.subjectContract.message}</span>}
-        </label>
-        <Input
-          register={register}
-          label={'Company'}
-          className="w-50"
-          titleInput={'Наименование организации'}
-          type={'text'}
-          errors={errors.Company}
-          required
-        />
-        <Input
-          register={register}
-          label={'manufacturingFirm'}
-          className="w-50"
-          titleInput={'Фирма-производитель'}
-          type={'text'}
-          errors={errors.manufacturingFirm}
-          required
-        />
+        </ElemForm>
+        <ElemForm className="w-50" titleElement={'Наименование организации'} errors={errors.Company}>
+          <Input register={register} label={'Company'} type={'text'} required />
+        </ElemForm>
+        <ElemForm className="w-50" titleElement={'Фирма-производитель'} errors={errors.manufacturingFirm}>
+          <Input register={register} label={'manufacturingFirm'} type={'text'} required />
+        </ElemForm>
+
         {typeContract === 'budget' && (
           <>
-            <label className="w-33">
-              Форма договора
-              <div className="label-radio-buttons">
-                <label>
-                  Электронный
-                  <input
-                    {...register('formContract', { required: 'Выберите один из пунктов' })}
-                    type="radio"
-                    value="Электронный"
-                  />
-                </label>
-                <label>
-                  Бумажный
-                  <input {...register('formContract', { required: 'Выберите один из пунктов' })} type="radio" value="Бумажный" />
-                </label>
+            <ElemForm className="w-33" titleElement={'Форма договора'} errors={errors.formContract}>
+              <div className="radio-buttons">
+                <InputRadio register={register} label={'formContract'} type={'radio'} value="Электронный" />
+                <InputRadio register={register} label={'formContract'} type={'radio'} value="Бумажный" />
               </div>
-              {errors?.formContract && <span className="error-message">{errors?.formContract.message}</span>}
-            </label>
-            <label className="w-33">
-              Вид процедуры закупки
-              <div className="label-radio-buttons">
-                <label>
-                  ЗОИ
-                  <input {...register('typeProcedure', { required: 'Выберите один из пунктов' })} type="radio" value="ЗОИ" />
-                </label>
-                <label>
-                  ЗЦП
-                  <input {...register('typeProcedure', { required: 'Выберите один из пунктов' })} type="radio" value="ЗЦП" />
-                </label>
-                <label>
-                  ЭА
-                  <input {...register('typeProcedure', { required: 'Выберите один из пунктов' })} type="radio" value="ЭА" />
-                </label>
+            </ElemForm>
+            <ElemForm className="w-33" titleElement={'Вид процедуры закупки'} errors={errors.typeProcedure}>
+              <div className="radio-buttons">
+                <InputRadio register={register} label={'typeProcedure'} type={'radio'} value="ЗОИ" />
+                <InputRadio register={register} label={'typeProcedure'} type={'radio'} value="ЗЦП" />
+                <InputRadio register={register} label={'typeProcedure'} type={'radio'} value="ЭА" />
               </div>
-              {errors?.typeProcedure && <span className="error-message">{errors?.typeProcedure.message}</span>}
-            </label>
-            <label className="w-33 reference-zoi" id="reference-zoi">
-              Справка ЗОИ
-              <div className="label-radio-buttons">
-                <label>
-                  Есть
-                  <input {...register('referenceZOI')} type="radio" value="Есть" />
-                </label>
-                <label>
-                  Нет
-                  <input {...register('referenceZOI')} type="radio" value="Нет" />
-                </label>
-              </div>
-              {errors?.referenceZOI && <span className="error-message">{errors?.referenceZOI.message}</span>}
-            </label>
+            </ElemForm>
+            {!isReferenceZOI && <ElemForm className="w-33" />}
+            {isReferenceZOI && (
+              <ElemForm className="w-33" titleElement={'Справка ЗОИ'} errors={errors.referenceZOI}>
+                <div className="radio-buttons">
+                  <InputRadio register={register} label={'referenceZOI'} type={'radio'} value="Есть" />
+                  <InputRadio register={register} label={'referenceZOI'} type={'radio'} value="Нет" />
+                </div>
+              </ElemForm>
+            )}
           </>
         )}
-        <Input
-          register={register}
-          label={'producingCountry'}
-          className="w-33"
-          titleInput={'Страна производитель'}
-          type={'text'}
-          errors={errors.producingCountry}
-          required
-        />
-        <Input
-          register={register}
-          label={'agreementPrice'}
-          className="w-33"
-          titleInput={'Стоимость доп.соглашения'}
-          type={'number'}
-          errors={errors.agreementPrice}
-          required
-        />
-        <Input
-          register={register}
-          label={'Price'}
-          className="w-33"
-          titleInput={'Стоимость'}
-          type={'number'}
-          errors={errors.Price}
-          required
-        />
-        <label className="w-50">
-          Срок действия договора
+
+        <ElemForm className="w-33" titleElement={'Страна производитель'} errors={errors.producingCountry}>
+          <Input register={register} label={'producingCountry'} type={'text'} required />
+        </ElemForm>
+        <ElemForm className="w-33" titleElement={'Стоимость доп.соглашения'} errors={errors.agreementPrice}>
+          <Input register={register} label={'agreementPrice'} type={'number'} required />
+        </ElemForm>
+        <ElemForm className="w-33" titleElement={'Стоимость'} errors={errors.Price}>
+          <Input register={register} label={'Price'} type={'number'} required />
+        </ElemForm>
+        <ElemForm className="w-50" titleElement={'Срок действия договора'} errors={errors.contractTimeBy}>
           <div className="label-contract-time">
             <label>
               C
-              <input {...register('contractTimeFrom')} className={'input-main'} type="date" value={dateConclusion} />
+              <Input register={register} label={'contractTimeFrom'} type={'date'} value={dateConclusion} />
             </label>
             <label>
               По
-              <input
-                {...register('contractTimeBy', { required: 'Поле обязательно к заполнению' })}
-                className={`input-main ${errors?.contractTimeBy ? 'input-main-error' : ''}`}
-                type="date"
-              />
+              <Input register={register} label={'contractTimeBy'} type={'date'} required />
             </label>
           </div>
-          {errors?.contractTimeBy && <span className="error-message">{errors?.contractTimeBy.message}</span>}
-        </label>
+        </ElemForm>
         <Button className={'form-btn'} type={'submit'}>
           Добавить договор
         </Button>

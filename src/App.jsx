@@ -6,21 +6,10 @@ import Contracts from './pages/Contracts';
 import EditContract from './pages/EditContract';
 
 const App = () => {
-  // const [contractsBudget, setContractsBudget] = useState([]);
-  // const [contractsOwn, setContractsOwn] = useState([]);
   const [contracts, setContracts] = useState([]);
   const [typeContract, setTypeContract] = useState('');
 
   const getDataContract = (data) => setContracts((prevContracts) => [...prevContracts, data]);
-
-  console.log(contracts);
-  // if (data.typeContract === 'budget') {
-  //   setContractsBudget((prevDataContract) => [...prevDataContract, data]);
-  // } else if (data.typeContract === 'own') {
-  //   setContractsOwn((prevDataContract) => [...prevDataContract, data]);
-  // }
-
-  // const dataContractEdit = (data) => console.log(data);
   const getTypeContract = (type) => setTypeContract(type);
 
   return (
