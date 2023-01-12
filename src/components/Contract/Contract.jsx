@@ -14,7 +14,7 @@ const Contract = ({ contract, index, type, dataContractEdit }) => {
     setOpenContract(index);
   };
 
-  const handleContractEdit = () => dataContractEdit(contract.id);
+  const handleContractEdit = () => dataContractEdit(contract);
 
   return (
     <div className="contract-item" onClick={() => toggle(index)}>
@@ -107,7 +107,7 @@ const Contract = ({ contract, index, type, dataContractEdit }) => {
           <span>{contract.Price}</span>
         </div>
         <div className="contract-item__btn-edit">
-          <Link to="/edit-contract">
+          <Link to={`/edit-contract/${contract.Number}`}>
             <Button type={'button'} onClick={handleContractEdit}>
               Редактировать
             </Button>

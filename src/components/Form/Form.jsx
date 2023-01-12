@@ -10,7 +10,7 @@ import './Form.css';
 import ElemForm from './ElemForm';
 import InputRadio from '../UI/InputRadio';
 
-const Form = ({ getDataContract, typeContract }) => {
+const Form = ({ getDataContract, typeContract, contracts, editContract, editButton }) => {
   const [dateConclusion, setDateConclusion] = useState('');
   const [isReferenceZOI, setIsReferenceZOI] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -118,7 +118,7 @@ const Form = ({ getDataContract, typeContract }) => {
           </div>
         </ElemForm>
         <Button className={'form-btn'} type={'submit'}>
-          Добавить договор
+          {editButton ? editButton.text : 'Добавить договор'}
         </Button>
       </form>
       <Modal className={modalOpen ? 'show' : ''} typeContract={typeContractModal[typeContract]} closeModal={closeModal} />
